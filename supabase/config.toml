@@ -1,0 +1,39 @@
+# Supabase CLI configuration.
+#
+# Local development uses the Docker-based local stack:
+#   supabase start
+#   supabase db reset      # applies supabase/migrations in order
+#   supabase gen types typescript --local > src/lib/database.types.ts
+#
+# Docker is required for the local stack. It is not needed by the deployed app.
+
+project_id = "it-asset-management"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 17
+
+[studio]
+enabled = true
+port = 54323
+
+[storage]
+enabled = true
+file_size_limit = "20MiB"
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+# /auth/callback redeems the PKCE code from the password-recovery email. Supabase
+# rejects any redirect target that is not listed here, so a deployed origin must be
+# appended as well.
+additional_redirect_urls = ["http://localhost:3000", "http://localhost:3000/auth/callback"]
+jwt_expiry = 3600
+enable_signup = false
